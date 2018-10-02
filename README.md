@@ -26,3 +26,20 @@ flatc("monster.fbs"), {
     console.log("Done!");
 }).catch(console.error);
 ```
+
+## Options
+
+The wrapper just passes through boolean properties as flags. For documentation see https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html.
+
+```javascript
+const default_options = {
+    language: "js",
+    outputDir: null,
+    genMutable: false,
+    genObjectApi: false,
+    genOnefile: false,
+    genAll: false,
+    noJsExports: false,
+    googJsExport: false,
+}
+```

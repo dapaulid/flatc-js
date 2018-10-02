@@ -10,7 +10,8 @@
     "url": "https://github.com/dapaulid/flatc-js"
   },
   "scripts": {
-    "postinstall": "node src/get-binaries.js"
+    "postinstall": "node src/get-binaries.js",
+    "test": "node example/example.js"
   },
   "keywords": [
     "flatbuffers",

@@ -1,0 +1,22 @@
+{
+  "name": "gulp-flatc",
+  "version": "0.0.1",
+  "description": "Node.js bindings for Google FlatBuffers compiler.",
+  "main": "index.js",
+  "author": "Daniel Pauli",
+  "license": "SEE SEPARATE LICENSE FILE",  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dapaulid/flatc-js"
+  },  
+  "scripts": {
+    "postinstall": "node src/get-binaries.js"
+  },
+  "keywords": [
+    "flatbuffers",
+    "flatc"
+  ],
+  "dependencies": {
+    "download": "^7.1.0"
+  }
+}

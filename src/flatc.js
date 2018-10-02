@@ -25,12 +25,12 @@ const child_process = require('child_process');
 const default_options = {
     language: "js",
     outputDir: null,
-    genMutable: true,
-    genObjectApi: true,
-    genOnefile: true,
-    genAll: true,
-    noJsExports: true,
-    googJsExport: true,
+    genMutable: false,
+    genObjectApi: false,
+    genOnefile: false,
+    genAll: false,
+    noJsExports: false,
+    googJsExport: false,
 }
 
 const FLATC_EXEC = path.normalize(__dirname + "/../bin/flatc");

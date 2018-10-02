@@ -1,40 +1,30 @@
+/******************************************************************************/
+/*!
+	\module    : flatc.js
+	\project   : flatc-js (https://github.com/dapaulid/flatc-js)
+    \author    : Daniel Pauli
+	\date      : 2018-10-02
+	\language  : JavaScript
+	\platform  : Node.js
+*/
+/******************************************************************************/
+
+//------------------------------------------------------------------------------
+// imports
+//------------------------------------------------------------------------------
+
+// node
+const path = require('path');
 const child_process = require('child_process');
 
-const FLATC_EXEC = "./bin/flatc"
 
-function exec(command, args, cb) {
-    let stdout = "";
-    let stderr = "";
-    const proc = child_process.spawn(command, args);
-    proc.stdout.on('data', (data) => stdout += data);
-    proc.stderr.on('data', (data) => stderr += data);
-    proc.on('close', function (code) {
-        cb(code, stdout.split(/\r?\n/), stderr.split(/\r?\n/));
-    });
-}
-
-function isUpper(str) {
-    return str === str.toUpperCase() && str !== str.toLowerCase();
-}
-
-function camelToFlag(str) {
-    if (!str) {
-        return str;
-    }
-    let flag = "--";
-    for (const ch of str) {
-        if (isUpper(ch)) {
-            flag += '-' + ch.toLowerCase();
-        } else {
-            flag += ch;
-        }
-    }
-    return flag;
-}
+//------------------------------------------------------------------------------
+// constants
+//------------------------------------------------------------------------------
 
 const default_options = {
     language: "js",
-    outputDir: "foo",
+    outputDir: null,
     genMutable: true,
     genObjectApi: true,
     genOnefile: true,
@@ -42,6 +32,13 @@ const default_options = {
     noJsExports: true,
     googJsExport: true,
 }
+
+const FLATC_EXEC = path.normalize(__dirname + "/../bin/flatc");
+
+
+//------------------------------------------------------------------------------
+// API functions
+//------------------------------------------------------------------------------
 
 function flatc(inputFile, options) {
     return new Promise((resolve, reject) => {
@@ -79,4 +76,53 @@ function flatc(inputFile, options) {
     })
 }
 
+
+//------------------------------------------------------------------------------
+// helpers
+//------------------------------------------------------------------------------
+
+function exec(command, args, cb) {
+    let stdout = "";
+    let stderr = "";
+    const proc = child_process.spawn(command, args);
+    proc.stdout.on('data', (data) => stdout += data);
+    proc.stderr.on('data', (data) => stderr += data);
+    proc.on('close', function (code) {
+        cb(code, stdout.split(/\r?\n/), stderr.split(/\r?\n/));
+    });
+}
+
+//------------------------------------------------------------------------------
+
+function isUpper(str) {
+    return str === str.toUpperCase() && str !== str.toLowerCase();
+}
+
+//------------------------------------------------------------------------------
+
+function camelToFlag(str) {
+    if (!str) {
+        return str;
+    }
+    let flag = "--";
+    for (const ch of str) {
+        if (isUpper(ch)) {
+            flag += '-' + ch.toLowerCase();
+        } else {
+            flag += ch;
+        }
+    }
+    return flag;
+}
+
+
+//------------------------------------------------------------------------------
+// exports
+//------------------------------------------------------------------------------
+
 module.exports = flatc;
+
+
+//------------------------------------------------------------------------------
+// end of file
+

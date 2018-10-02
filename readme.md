@@ -19,7 +19,7 @@ npm install --save-dev flatc
 ```javascript
 const flatc = require('flatc');
 
-flatc("monster.fbs"), {
+flatc("monster.fbs", {
     language: ["js", "ts"],
     outputDir: "output",
 }).then(() => {

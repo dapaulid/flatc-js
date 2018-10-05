@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "download": "^7.1.0",
+    "optional": "^0.1.4",
     "rimraf": "^2.6.2"
   },
   "flatc": {

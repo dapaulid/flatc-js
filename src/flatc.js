@@ -17,6 +17,11 @@
 const path = require('path');
 const child_process = require('child_process');
 
+// externals
+const optional = require('optional');
+
+// optional externals
+const glob = optional('glob');
 
 //------------------------------------------------------------------------------
 // constants
@@ -40,10 +45,12 @@ const FLATC_EXEC = path.normalize(__dirname + "/../bin/flatc");
 // API functions
 //------------------------------------------------------------------------------
 
-function flatc(inputFile, options) {
-    return new Promise((resolve, reject) => {
-        // use defaults for not specified options
-        options = Object.assign({}, default_options, options);
+function flatc(inputFiles, options) {
+
+    // use defaults for not specified options
+    options = Object.assign({}, default_options, options);
+
+    function run(inputFiles, resolve, reject) {
         // build command line arguments
         const args = [];
         // add generator options
@@ -63,7 +70,9 @@ function flatc(inputFile, options) {
             }
         }
         // add input files
-        args.push(inputFile);
+        for (const inputFile of inputFiles) {
+            args.push(inputFile);
+        }
         // run flatc command
         exec(FLATC_EXEC, args, (code, stdout, stderr) => {
             if (code === 0) {
@@ -73,7 +82,24 @@ function flatc(inputFile, options) {
                 reject(err);
             }
         });
-    })
+    }
+
+    return new Promise((resolve, reject) => {
+        // glob supported?
+        if (glob && typeof inputFiles === 'string') {
+            // yes -> use it to get file list
+            glob(inputFiles, { nonull: true }, (err, matches) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    run(matches, resolve, reject);
+                }
+            });
+        } else {
+            // no -> just pass the files we got
+            run([].concat(inputFiles), resolve, reject);
+        }
+    });
 }
 
 

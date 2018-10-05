@@ -1,10 +1,10 @@
 # flatc.js
-Node.js bindings for Google FlatBuffers compiler (https://github.com/google/flatbuffers).
+Node.js bindings for [Google FlatBuffers compiler](https://github.com/google/flatbuffers).
 
 ## Purpose
 
 This module provides a simple wrapper around Google FlatBuffers compiler (`flatc`) in order to make it usable in Node.js. 
-The required binaries are either downloaded directly (Windows) or built from source (Linux) from the official release (https://github.com/google/flatbuffers/releases).
+The required binaries are either downloaded directly (Windows) or built from source (Linux) from the [official release](https://github.com/google/flatbuffers/releases).
 
 ## Requirements
 
@@ -27,9 +27,11 @@ flatc("monster.fbs", {
 }).catch(console.error);
 ```
 
+If you have the `glob` module installed, you can also use patterns like `*.fbs` for specifying input files.
+
 ## Options
 
-The wrapper just passes through boolean properties as flags. For documentation see https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html.
+The wrapper just passes through boolean properties as flags. For more information see the [FlatBuffers documentation]( https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html).
 
 ```javascript
 const default_options = {
